@@ -4,3 +4,9 @@ en:
         Use B1 English level.
         Every message should contain about 100 words and not more.
         'Start New Game' phrase should remove all previous experience and start new game."
+    hello: "Hello Adventurer! \
+        Are you ready for an exciting journey? \
+        In this Text Quest Adventure, you will explore a magical world filled with mysteries, \
+        challenges, and treasures! Your choices will shape the story, so think carefully about what you want to do"
+    start_game: Do you want to start a new game?
+    confirm: "Yes"

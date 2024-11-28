@@ -16,7 +16,7 @@ class GameResponse(typing.TypedDict):
 
 load_dotenv()
 i18n.load_path.append('src/locales')
-i18n.set('locale', 'en')
+i18n.set('locale', os.environ['LOCALE'])
 
 class GeminiChatbot:
     def __init__(self):
