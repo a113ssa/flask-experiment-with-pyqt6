@@ -6,7 +6,7 @@ from functools import partial
 import i18n  # type: ignore
 import requests  # type: ignore
 from dotenv import load_dotenv  # type: ignore
-from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QMovie
 from PyQt6.QtWidgets import (
     QApplication,
@@ -43,6 +43,8 @@ class MainWindow(QMainWindow):
 
         widget = QWidget()
         widget.setLayout(layout)
+
+        self.set_background_color(widget, Qt.GlobalColor.black, Qt.GlobalColor.lightGray)
         self.setCentralWidget(widget)
 
     def start_game(self):
@@ -54,10 +56,17 @@ class MainWindow(QMainWindow):
         font.setPointSize(font_size)
         label.setFont(font)
 
+    def set_background_color(self, widget: QWidget, color: Qt.GlobalColor, font_color: Qt.GlobalColor):
+        palette = widget.palette()
+        palette.setColor(widget.backgroundRole(), color)
+        palette.setColor(widget.foregroundRole(), font_color)
+        widget.setPalette(palette)
+        widget.setAutoFillBackground(True)
+
     def set_game_screen(self, response: dict):
         layout = QVBoxLayout()
 
-        layout.addWidget(self.set_game_quest_label(response['questText']))
+        layout.addWidget(self.set_game_quest_label(response['questText'], margin=10))
 
         mood = self.set_game_mood(response['mood'])
         mood.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -69,6 +78,8 @@ class MainWindow(QMainWindow):
 
         widget = QWidget()
         widget.setLayout(layout)
+
+        self.set_background_color(widget, Qt.GlobalColor.black, Qt.GlobalColor.lightGray)
         self.setCentralWidget(widget)
 
     def set_game_quest_label(self, text: str, font_size: int=15, margin: int=20, word_wrap: bool=True, alignment: Qt.AlignmentFlag=Qt.AlignmentFlag.AlignLeft) -> QLabel:
@@ -100,8 +111,8 @@ class MainWindow(QMainWindow):
         label = QLabel()
         mood_index = random.randint(1, 3)
         movie = QMovie('src/images/' + mood + f"/{mood_index}.gif")
-        movie.setScaledSize(QSize(200, 200))
         label.setMovie(movie)
+        label.setMinimumHeight(200)
         movie.start()
 
         return label
