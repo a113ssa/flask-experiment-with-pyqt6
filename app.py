@@ -1,15 +1,17 @@
-from flask import Flask
-from dotenv import load_dotenv
-import google.generativeai as genai
-import os
+from flask import Flask, request
+
+from src.chatbot.chatbot import GeminiChatbot as chatbot
 
 app = Flask(__name__)
-
-load_dotenv()
-genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
+chat = chatbot()
 
 @app.get('/chatbot')
 def get_chatbot():
-    flash = genai.GenerativeModel('gemini-1.5-flash')
-    response = flash.generate_content("Write very short introductory funny welcome sentence")
-    return response.text
+    response = chat.send_message('Start New Game')
+    return  response
+
+@app.post('/chatbot')
+def post_chatbot():
+    request_data = request.get_json()
+    response = chat.send_message(request_data['message'])
+    return response
