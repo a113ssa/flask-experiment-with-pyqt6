@@ -9,7 +9,7 @@ from src.utils.helpers import remove_markdown
 
 load_dotenv()
 i18n.load_path.append('src/locales')
-i18n.set('locale', 'ru')
+i18n.set('locale', 'en')
 
 class GeminiChatbot:
     def __init__(self):
