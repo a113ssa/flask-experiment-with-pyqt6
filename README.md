@@ -1,0 +1,3 @@
+### Text quest adventure game with GenAI, Flask and PyQT6
+
+In progress...
