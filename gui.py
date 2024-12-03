@@ -7,7 +7,7 @@ import i18n  # type: ignore
 import requests  # type: ignore
 from dotenv import load_dotenv  # type: ignore
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QMovie
+from PyQt6 import QtGui
 from PyQt6.QtWidgets import (
     QApplication,
     QLabel,
@@ -110,7 +110,7 @@ class MainWindow(QMainWindow):
     def set_game_mood(self, mood: str) -> QLabel:
         label = QLabel()
         mood_index = random.randint(1, 3)
-        movie = QMovie('src/images/' + mood + f"/{mood_index}.gif")
+        movie = QtGui.QMovie('src/images/' + mood + f"/{mood_index}.gif")
         label.setMovie(movie)
         label.setMinimumHeight(200)
         movie.start()
