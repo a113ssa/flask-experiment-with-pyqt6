@@ -5,7 +5,6 @@ from typing import Literal
 import google.generativeai as genai  # type: ignore
 import i18n  # type: ignore
 import typing_extensions as typing
-from dotenv import load_dotenv
 
 
 class GameResponse(typing.TypedDict):
@@ -14,7 +13,6 @@ class GameResponse(typing.TypedDict):
     mood: Literal['neutral', 'curious', 'fear', 'happy']
 
 
-load_dotenv()
 i18n.load_path.append('src/locales')
 i18n.set('locale', os.environ['LOCALE'])
 
