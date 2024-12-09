@@ -40,4 +40,4 @@ flask run | python qt.py
 ```
 <br>
 
-✶ Open the browser and go to [http://127.0.0.1:5000/apidocs](http://127.0.0.1:5000/apidocs) to get Swagger documentation
+✶ Open the browser and go to [http://127.0.0.1:5000/apidocs](http://127.0.0.1:5000/api-docs) to get Swagger documentation
