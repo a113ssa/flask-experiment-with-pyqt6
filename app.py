@@ -1,7 +1,10 @@
+import os
+
 from flask import Flask
 from flask_smorest import Api
 
-from resources.game import blp as GameBlueprint
+from resources.games import blp as GameBlueprint
+from resources.users import blp as UserBlueprint
 
 
 class ApiConfig:
@@ -11,6 +14,7 @@ class ApiConfig:
     OPENAPI_URL_PREFIX = '/'
     OPENAPI_SWAGGER_UI_PATH = '/api-docs'
     OPENAPI_SWAGGER_UI_URL = 'https://cdn.jsdelivr.net/npm/swagger-ui-dist/'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3')
 
 app = Flask(__name__)
 
@@ -19,3 +23,4 @@ app.config.from_object(ApiConfig)
 api = Api(app)
 
 api.register_blueprint(GameBlueprint)
+api.register_blueprint(UserBlueprint)

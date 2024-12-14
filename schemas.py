@@ -11,3 +11,12 @@ class GameResponseSchema(Schema):
 
 class GameRequestSchema(Schema):
     message = fields.Str(required=True)
+
+
+class UserResponseSchema(Schema):
+    nickname = fields.Str(required=True, dump_only=True)
+    health = fields.Int(required=True, dump_only=True)
+
+
+class UserRequestSchema(Schema):
+    nickname = fields.Str(required=True)

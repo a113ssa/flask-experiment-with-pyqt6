@@ -8,8 +8,8 @@ blp = Blueprint("Game", __name__, description="Game operations")
 chat = chatbot()
 
 
-@blp.route("/game")
-class Game(MethodView):
+@blp.route("/games")
+class Games(MethodView):
     @blp.response(200, GameResponseSchema)
     def get(self):
         response = chat.send_message('Start New Game')
