@@ -4,7 +4,7 @@ from flask_smorest import Blueprint
 from schemas import GameRequestSchema, GameResponseSchema
 from src.chatbot.chatbot import GeminiChatbot as chatbot
 
-blp = Blueprint("Game", __name__, description="Game operations")
+blp = Blueprint("Games", __name__, description="Game operations")
 chat = chatbot()
 
 

@@ -1,2 +1,2 @@
-from models.user import UserModel
 from models.story import StoryModel
+from models.user import UserModel
