@@ -1,34 +1,37 @@
-import json
 import os
-from typing import Literal
+from typing import Literal, List
 
-import google.generativeai as genai  # type: ignore
-import i18n  # type: ignore
-import typing_extensions as typing
+import i18n
+
+from langchain_google_genai import GoogleGenerativeAI
+from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.prompts import PromptTemplate
+
+from pydantic import BaseModel
 
 
-class GameResponse(typing.TypedDict):
+class GameResponse(BaseModel):
     questText: str
-    responseVariants: list[str]
+    responseVariants: List[str]
     mood: Literal['neutral', 'curious', 'fear', 'happy']
 
 
 i18n.load_path.append('src/locales')
 i18n.set('locale', os.environ['LOCALE'])
 
-class GeminiChatbot:
+class Chatbot:
     def __init__(self):
-        genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
-        self.model = genai.GenerativeModel(
-            os.environ['GEMINI_VERSION'],
-            generation_config=genai.GenerationConfig(
-                response_mime_type='application/json',
-                response_schema=GameResponse
-            )
+        model = GoogleGenerativeAI(
+            model=os.environ['LLM_VERSION'],
+            temperature=os.environ['LLM_TEMPERATURE'],
         )
-        self.chat = self.model.start_chat(history=[])
-        self.chat.send_message(i18n.t('game.init_game'))
+        parser = JsonOutputParser(pydantic_object=GameResponse)
+        prompt = PromptTemplate(
+            template=i18n.t('game.init_game') + "\n{answer}\n{format_instructions}\n",
+            input_variables=['answer'],
+            partial_variables={'format_instructions': parser.get_format_instructions()},
+        )
+        self.chain = prompt | model | parser
 
     def send_message(self, message):
-        response = self.chat.send_message(message)
-        return json.loads(response.text)
+        return self.chain.invoke(message)
